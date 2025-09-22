@@ -1,0 +1,479 @@
+How application works
+
+
+setup/install application
+OS
+
+MSI/exe
+deb/rpm/tar.gz
+
+scale up
+
+SEtup more vm/phy server
+
+app v1--> Linux env
+
+Linux box-->app v1
+
+Scale up --VM
+
+app v1 another version of application 
+
+Linux-->app v1 and i want run v2 version
+
+v1 and v2 
+
+
+-------------------------
+
+Problem statement
+
+Envrionment
+
+
+dotnet framework (3.x to 4.x)
+
+one application 3.x
+
+another application 4.x
+
+
+-----------------
+
+bundle the running environment of application  (Capture)-->create a box of application 
+
+code+run time+ dep+lib
+
+----------------------------------------------------
+
+container images: need to go create these images for your application..
+
+How will i run on the os.
+
+We need to go and setup a software/application which can create and run the containers: Container run time.
+
+
+Container run time is an application which can manage the container lifecycle on os.
+
+-->container life cycle include
+
+-->create the container from image
+-->start the container
+--> get the ip/networking
+-->external storage
+-->stop container
+-->restart
+-->terminate the container
+
+
+Container run time: Docker( containerd) , Podman (Cri-o), runc, prun. (cncf: Foundation which manage k8s)
+
+
+Container run time application can not build the container image.
+
+
+To build the container image we have separate lib: buildkt (Docker), Podman(buildah)
+
+
+
+docker--
+
+docker cli-->client
+
+as user you will interact with container runtime using docker cli
+
+
+Reciever end: dockerd (daemon called service)-->which will receive your request.
+
+dockerd will communicate to the containerd
+
+
+
+container images are stored and shared through a repository: which called registry
+
+hub.docker.com
+quay.io
+ghcr(GitHub)
+mcr(micorsoft)
+
+
+downloading the image
+
+creating container from image
+
+checking ip
+
+running starting /stopping
+
+---------------------------------------------------
+container-->application
+
+data also has gone.
+
+docker volume
+
+
+-------------------------------------
+
+networking
+
+docker0 bridge(virtual switch):172.17.0.1
+
+docker run nginx
+
+single host this network will work
+
+
+docker run --name registry -p 5000:5000
+
+Linux box is the host
+
+
+container is running in that host-->container applicable will be reachable from host port 5000
+
+
+
+webserver:80 (conf,port 80 http port)
+conf-->81
+
+
+
+
+
+two host
+
+one container  host1
+another container host2
+
+cni-->network overlaying
+
+
+
+another host db
+
+Frontend container: ubuntu: 192.168.111.130:5000
+
+
+
+
+----------------------------------
+https://github.com/amitopenwriteup/dockerlabs/blob/main/docker%20network%20lab%201.txt
+
+docker 0 a3
+
+alpine-net a1,a2,a4
+
+-----------------------------------------------------------
+
+
+application dev.
+
+docker container image development is not the part container runtime.
+
+currently your application is running in form of installater.
+
+Write a assembling to create the container image for your application.
+
+docker provide the concept dockerfile.
+
+dockerfile where you write the set of instruction to container image for your application
+
+Docker file: txt file, there is not extension file.
+
+WRiting a set of instruction, which is predefined to perform assembling process
+
+1) docker file
+2) docker build
+3) docker push
+
+git repo (application code ) +dockerfile+ gitlab-ci.yml
+
+-->dockerbuild
+-->docker push
+
+First you need to know the current env requirement?
+
+-- which os you are compiling the applcaiton
+-- dependency
+-- port
+-- default directory
+-- code
+---------------------------------
+
+python application
+
+identify the base image-->image where you can find the environment.
+
+OFfical vendor images base image
+
+#inside the docker file
+
+FROM ubuntu
+RUN apt-get install apache2
+LABEL author=amit
+EXPOSE 80
+
+#CMD,ENTRYPOINT,WROKDIR, ADD,COPY
+
+
+docker build -t myweb -f dockerfile .
+
+
+-----------------------------------------
+kuberenetes
+
+CR-->container run time
+
+
+CR--dependent on os, means across host container cannot be managed by single cr.
+
+How will you achieve loadbalancing,autoscaling and ha for containers?
+
+
+COE: container orchestration engine
+
+coe manage the cluster of hosts (where cr is running).
+
+coe: Kubernetes(k8s), docker swarm, mesoshphere
+
+k8s is container managment utitlity, which manage the pool of host where container runtime is installed.
+
+it will orchestring the container using cr.
+
+is k8s provide any cr? No
+
+-----------------------------------
+
+k8s opensource project, dev google, and opensourced in 2015.
+
+Now it is manage by linux foundation under cncf (cloud native computing foundation)
+
+Enterprise version:
+
+openshift (Redhat/ibm)
+
+Rancher (suse)
+
+Tanzu (vmware
+
+Cloud base
+
+EKS (Aws)
+AKS (Azure)
+GKE (Google)
+
+k8s -->master (control plane)
+
+Worker node (running the container)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
