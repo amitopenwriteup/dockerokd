@@ -1,0 +1,6 @@
+#reset
+
+swapoff -a
+kubeamd reset
+
+#press y

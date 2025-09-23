@@ -1,0 +1,21 @@
+vi pod.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-pod
+spec:
+  containers:
+    - name: main-container
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+
+#save the file
+
+kubectl create -f pod.yaml
+
+kubectl get pods
+
+kubectl describe pod example-pod
+

@@ -1,0 +1,3 @@
+kubectl get nodes
+kubectl describe nodes ubuntu|grep Taint
+kubectl taint node ubuntu node-role.kubernetes.io/control-plane:NoSchedule-
